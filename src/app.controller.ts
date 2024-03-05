@@ -1,12 +1,18 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post()
-  getHello(@Body() data: { name: string; email: string }) {
-    return this.appService.callService(data.email, data.name);
+  @Post('/user/create')
+  async createUser(@Body() data: any, @Res() response: Response): Promise<any> {
+    try {
+      await this.appService.createUser(data);
+      return response.status(HttpStatus.NO_CONTENT).send();
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
