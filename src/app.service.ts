@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
   ClientProxy,
   ClientProxyFactory,
@@ -19,17 +19,13 @@ export class AppService {
     });
   }
 
-  async createUser(body): Promise<Observable<any>> {
+  async createUser(body): Promise<any> {
     try {
-      return await lastValueFrom(this.userClient.send('create-user', body).pipe(
-        catchError(err => {
-          console.error('Erro ao chamar microserviço', err);
-          return of(null);
-        }),
-        defaultIfEmpty(null)
-      ));
-    } catch (err) {
-      console.error(err);
+      const result = await this.userClient.send('create-user', body).toPromise();
+      return result;
+    } catch (error) {
+      console.error('Error occurred in createUser:', error);
+      throw new HttpException('Teste', HttpStatus.BAD_REQUEST);
     }
   }
 }

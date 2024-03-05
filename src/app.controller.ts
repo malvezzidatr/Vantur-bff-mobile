@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from 'express';
 
@@ -12,7 +12,7 @@ export class AppController {
       await this.appService.createUser(data);
       return response.status(HttpStatus.NO_CONTENT).send();
     } catch (err) {
-      console.error(err);
+      throw new HttpException('Falha ao criar', HttpStatus.BAD_REQUEST);
     }
   }
 }
