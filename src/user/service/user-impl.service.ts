@@ -4,10 +4,11 @@ import {
   ClientProxyFactory,
   Transport,
 } from '@nestjs/microservices';
-import { Observable, catchError, defaultIfEmpty, firstValueFrom, last, lastValueFrom, of } from 'rxjs';
+import { UserService } from './user.service';
+import { CreateUserDTO } from '../dto/create-user.dto';
 
 @Injectable()
-export class AppService {
+export class UserServiceImpl implements UserService {
   private readonly userClient: ClientProxy;
 
   constructor() {
@@ -19,13 +20,11 @@ export class AppService {
     });
   }
 
-  async createUser(body): Promise<any> {
+  async createUser(createUserDTO: CreateUserDTO): Promise<CreateUserDTO> {
     try {
-      const result = await this.userClient.send('create-user', body).toPromise();
-      return result;
+      return await this.userClient.send('create-user', createUserDTO).toPromise();
     } catch (error) {
-      console.error('Error occurred in createUser:', error);
-      throw new HttpException('Teste', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Falha ao criar usuário', HttpStatus.BAD_REQUEST);
     }
   }
 }
