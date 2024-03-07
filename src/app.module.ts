@@ -2,20 +2,19 @@ import { Module } from '@nestjs/common';
 import { UserServiceImpl } from './user/service/user-impl.service';
 import { UserController } from './user/controller/user.controller';
 import { UserModule } from './user/module/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
+import { APP_FILTER } from '@nestjs/core';
+import { BffExceptionFilter } from './filter/bffException.filter';
 
 @Module({
   imports: [
+    UserModule,
     HttpModule,
-    ClientsModule.register([
-      { name: 'USER_SERVICE', transport: Transport.TCP },
-    ]),
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
   ],
-  controllers: [UserController],
-  providers: [UserServiceImpl],
+  controllers: [],
+  providers: [{provide: APP_FILTER, useClass: BffExceptionFilter}],
 })
 
 export class AppModule {}

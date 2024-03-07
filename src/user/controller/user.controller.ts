@@ -8,12 +8,10 @@ export class UserController {
   constructor(private readonly userServiceImpl: UserServiceImpl) {}
 
   @Post('/user/create')
-  async createUser(@Body() createUserDTO: CreateUserDTO, @Res() res: Response): Promise<any> {
-    try {
+  async createUser(
+    @Body() createUserDTO: CreateUserDTO,
+    @Res() res: Response): Promise<any> {
       const user: Partial<CreateUserDTO> = await this.userServiceImpl.createUser(createUserDTO);
       return res.status(HttpStatus.CREATED).json({message: 'Usuário criado com sucesso!', user});
-    } catch (error) {
-      throw new HttpException('Falha ao criar usuário', HttpStatus.BAD_REQUEST)
-    }
   }
 }
