@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 import { FileDTO } from './file.dto';
-import { CreateUserDTO } from 'src/user/dto/create-user.dto';
+import { CreateUserDTO } from 'src/user/dto/CreateUser.dto';
 
 export class TravelDTO {
   id: string;

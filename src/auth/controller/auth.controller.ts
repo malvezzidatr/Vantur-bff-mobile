@@ -10,8 +10,6 @@ export class AuthController {
   async signIn(
     @Body() body,
     @Res() res: Response): Promise<any> {
-    //   const user = await this.authServiceImpl.createUser(createUserDTO);
-    //   return res.status(HttpStatus.CREATED).json({ message: 'Usuário criado com sucesso!', user });
     return res.status(222).send()
   }
 }
