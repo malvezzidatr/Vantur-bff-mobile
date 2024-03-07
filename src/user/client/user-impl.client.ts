@@ -14,8 +14,8 @@ export class UserClientImpl implements UserClient {
     this.httpService = httpService;
   }
 
-  async createUser(createUserDTO: CreateUserDTO): Promise<any> {
-    return firstValueFrom(
+  async createUser(createUserDTO: CreateUserDTO): Promise<CreateUserDTO> {
+    return firstValueFrom<CreateUserDTO>(
       this.httpService.post('http://localhost:3002/user/create', createUserDTO)
         .pipe(map(res => {
           return res.data

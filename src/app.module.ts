@@ -6,10 +6,12 @@ import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER } from '@nestjs/core';
 import { BffExceptionFilter } from './filter/bffException.filter';
+import { AuthModule } from './auth/module/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     HttpModule,
     ConfigModule.forRoot(),
   ],

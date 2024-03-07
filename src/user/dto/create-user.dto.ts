@@ -46,6 +46,4 @@ export class CreateUserDTO {
     message: 'Senha não pode ficar vazio',
   })
   password?: string;
-
-  travels: TravelDTO[];
 }

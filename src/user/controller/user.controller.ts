@@ -12,6 +12,6 @@ export class UserController {
     @Body() createUserDTO: CreateUserDTO,
     @Res() res: Response): Promise<any> {
       const user: Partial<CreateUserDTO> = await this.userServiceImpl.createUser(createUserDTO);
-      return res.status(HttpStatus.CREATED).json({message: 'Usuário criado com sucesso!', user});
+      return res.status(HttpStatus.CREATED).json({ message: 'Usuário criado com sucesso!', user });
   }
 }
